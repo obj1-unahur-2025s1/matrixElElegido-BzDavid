@@ -1,9 +1,58 @@
+import matrix.*
 
-
-describe "group of tests " {
-
-  test "test 01" {
-    assert.equals(100, 50+50)
+describe "Testeando la Matrix" {
+  test "Cuantos pasajeros hay" {
+    console.println(nave.cuantosPasajerosHay())
+    assert.equals(nave.cuantosPasajerosHay(), 3) 
   }
 
+  test "El pasajero de mayor vitalidad" {
+    assert.equals(nave.cualEsElPasajeroDeMayorVitalidad(), neo) 
+  }
+
+  test "El pasajero de mayor vitalidad sin Neo" {
+    nave.eliminarPasajero(neo)
+    assert.equals(nave.cualEsElPasajeroDeMayorVitalidad(), morfeo)
+  }
+
+  test "El elegido esta en la nave" {
+    assert.that(nave.estaElElegido()) 
+  }
+
+  test "El elegido no esta en la nave" {
+    nave.eliminarPasajero(neo)
+    assert.notThat(nave.estaElElegido()) 
+  }
+
+  test "La nave no esta equilibrada" {
+    assert.notThat(nave.estaEquilibrada()) 
+  }
+
+  test "La nave esta equilibrada" {
+    nave.eliminarPasajero(trinity)
+    assert.that(nave.estaEquilibrada()) 
+  }
+
+  test "Morfeo salta pero su energía no disminuye menos que 0" {
+    9.times({i => morfeo.saltar()})
+    assert.equals(morfeo.vitalidad(), 0)
+  }
+
+  test "La nave esta equilibrada después de algunos saltos" {
+    50.times({i => neo.saltar()})
+    9.times({i => morfeo.saltar()})
+    assert.that(nave.estaEquilibrada()) 
+  }
+
+  test "la nave choca y no quedan pasajeros" {
+    nave.choca()
+    assert.equals(nave.cuantosPasajerosHay(), 0) 
+  }
+
+  test "la nave acelera y se va neo" {
+    nave.acelera()
+    assert.equals(nave.cuantosPasajerosHay(), 2)
+    assert.notThat(nave.estaElElegido())
+    assert.equals(morfeo.vitalidad(), 7)
+  }
 }
